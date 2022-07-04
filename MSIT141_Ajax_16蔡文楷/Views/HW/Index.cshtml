@@ -15,7 +15,7 @@
 @section Scripts{
 
     <script>
-var emp = {
+        var emp = {
             "employees": [
                 { "name": "Tom", "workYears": 3, "salary": 35000 },
                 { "name": "Jack", "workYears": 5, "salary": 40000 },
@@ -27,40 +27,121 @@ var emp = {
             const tab1 = document.querySelector("#tab1");
 
             tab1.innerHTML = `<div class="row">
-                                    <div class="col border border-primary"><h2>JavaScript<h2></div>
-                                 </div>
-                                 <div class="row">
-                                    <div class="col border border-primary font-italic">Name</div>
-                                    <div class="col border border-primary font-italic">WorkYears</div>
-                                    <div class="col border border-primary font-italic">Salary</div>
-                                  </div>`;
-            emp.employees.forEach(employee=> {
+                                                <div class="col border border-primary"><h2>JavaScript<h2></div>
+                                             </div>
+                                             <div class="row">
+                                                <div class="col border border-primary font-italic">Name</div>
+                                                <div class="col border border-primary font-italic">WorkYears</div>
+                                                <div class="col border border-primary font-italic">Salary</div>
+                                              </div>`;
+            emp.employees.forEach(employee => {
                 let { name, workYears, salary } = employee;
                 tab1.innerHTML += `<div class="row">
-                                        <div class="col border border-primary">${name}</div>
-                                        <div class="col border border-primary">${workYears}</div>
-                                        <div class="col border border-primary">${salary}</div>
-                                     </div>`;
+                                                    <div class="col border border-primary">${name}</div>
+                                                    <div class="col border border-primary">${workYears}</div>
+                                                    <div class="col border border-primary">${salary}</div>
+                                                 </div>`;
             })
         })
         //JQ====================================================================
-        $("#btn_JQ").click(()=> {
+        $("#btn_JQ").click(() => {
             $("#tab2").html(`<div class="row">
-                                    <div class="col border border-primary"><h2>jQuery<h2></div>
-                                 </div>
-                                 <div class="row">
-                                    <div class="col border border-primary font-italic">Name</div>
-                                    <div class="col border border-primary font-italic">WorkYears</div>
-                                    <div class="col border border-primary font-italic">Salary</div>
-                                  </div>`);
+                                                <div class="col border border-primary"><h2>jQuery<h2></div>
+                                             </div>
+                                             <div class="row">
+                                                <div class="col border border-primary font-italic">Name</div>
+                                                <div class="col border border-primary font-italic">WorkYears</div>
+                                                <div class="col border border-primary font-italic">Salary</div>
+                                              </div>`);
             $.each(emp.employees, (index, emp) => {
                 const { name, workYears, salary } = emp
                 $("#tab2").append(`<div class="row">
-                                        <div class="col border border-primary">${name}</div>
-                                        <div class="col border border-primary">${workYears}</div>
-                                        <div class="col border border-primary">${salary}</div>
-                                     </div>`)
+                                                    <div class="col border border-primary">${name}</div>
+                                                    <div class="col border border-primary">${workYears}</div>
+                                                    <div class="col border border-primary">${salary}</div>
+                                                 </div>`)
             })
         })
     </script>
 }
+@*老師示範*@
+@*<button class="btn btn-primary mb-3" type="button" id="buttonClick">JavaScript</button>
+    <button class="btn btn-primary mb-3" type="button" id="buttonClick2">jQuery</button>
+    <table id="table1" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>WorkYears</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    @section Scripts{
+        <script>
+
+            const btn = document.querySelector('#buttonClick');
+            const myH = document.querySelector('.display-4');
+
+            btn.addEventListener('click', () => {
+
+                var emp = {
+                    "employees": [
+                        { "name": "Tom", "workYears": 3, "salary": 35000 },
+                        { "name": "Jack", "workYears": 5, "salary": 40000 },
+                        { "name": "Mary", "workYears": 7, "salary": 45000 }
+                    ]
+                };
+
+                const tb = document.querySelector('#table1>tbody');
+                let docFrag = document.createDocumentFragment();
+                tb.innerHTML = "";
+                emp.employees.forEach(employee => {
+
+                    const { name, workYears, salary } = employee;
+                    const cell1 = document.createElement("td");
+                    const txt1 = document.createTextNode(name);
+                    cell1.appendChild(txt1);
+                    const cell2 = document.createElement("td");
+                    const txt2 = document.createTextNode(workYears);
+                    cell2.appendChild(txt2);
+                    const cell3 = document.createElement("td");
+                    const txt3 = document.createTextNode(salary);
+                    cell3.appendChild(txt3);
+                    const row = document.createElement("tr");
+                    row.appendChild(cell1);
+                    row.appendChild(cell2);
+                    row.appendChild(cell3);
+                    docFrag.appendChild(row);
+                })
+                tb.appendChild(docFrag);
+            });
+            //jQuery
+            $('#buttonClick2').click(() => {
+                var emp = {
+                    "employees": [
+                        { "name": "Tom", "workYears": 3, "salary": 35000 },
+                        { "name": "Jack", "workYears": 5, "salary": 40000 },
+                        { "name": "Mary", "workYears": 7, "salary": 45000 }
+                    ]
+                };
+
+                把做好的結果放在記憶體裡面
+                let docFrag = $(document.createDocumentFragment());
+
+                $.each(emp.employees, (idx, employee) => {
+
+                    const { name, workYears, salary } = employee
+                    const cell1 = $('<td></td>').text(name);
+                    const cell2 = $('<td></td>').text(workYears);
+                    const cell3 = $('<td></td>').text(salary);
+                    const row = $('<tr></tr>').append([cell1, cell2, cell3]);
+                    docFrag.append(row);
+
+                })
+                $('#table1>tbody').html(docFrag);
+            })
+        </script>
+    }*@

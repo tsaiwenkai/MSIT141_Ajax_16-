@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "FirstAjax";
+}
+
+<h1>FirstAjax</h1>
+<button type="button" class="btn btn-primary mb-3" id="buttonStart">Ajax Start</button>
+<button type="button" class="btn btn-primary mb-3" id="buttonStop">Ajax Stop</button>
+姓名:<input id="name" type="text">
+年齡:<input id="age" type="text">
+<div id="div1" class="alert alert-secondary"></div>
+
+
+@section Scripts{
+    <script>
+        let btn = document.querySelector(`#buttonStart`);
+        let btns = document.querySelector(`#buttonStop`);
+        let div = document.querySelector(`#div1`);
+        let nametxt = document.querySelector(`#name`);
+        let agetxt = document.querySelector(`#age`);
+        const xhr = new XMLHttpRequest();
+        btns.addEventListener("click",()=> {
+            xhr.abort();
+        })
+
+        btn.addEventListener("click", () => {
+
+            
+            
+            xhr.addEventListener("load", () => {
+                let data = xhr.responseText;
+
+                div.innerHTML = `${data}`;
+            })
+            xhr.addEventListener("timeout", () => {
+
+                div.innerHTML="< h3 > 伺服器忙碌中請稍後再來</h3 >";
+            })
+
+            xhr.addEventListener("loadstart", () => {
+                btn.textContent = "Loading...";
+                btn.setAttribute('disabled', 'disabled');
+            })
+
+            xhr.addEventListener('loadend', () => {
+                btn.removeAttribute('disabled');
+                btn.textContent = "Ajax Start";
+            })
+
+            xhr.addEventListener("abort", () => {
+
+                div.innerHTML = "<h3>您終止了程式的執行</h3>"
+            })
+
+            let url = "@Url.Content("~/Api/Index")";
+            let params = `?name=${nametxt.value}&age=${agetxt.value}`;
+        /*xhr.open("GET", `/Api/index?name=${nametxt.value}&age=${agetxt.value}`);*/
+            xhr.open("GET", url + params);
+            xhr.timeout = 3000;
+            xhr.send();
+        })
+
+    </script>
+}
