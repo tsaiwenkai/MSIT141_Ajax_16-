@@ -3,15 +3,16 @@
     <form name="useInfo" method="post" enctype="application/x-www-form-urlencoded" action="~/api/index">
         <div class="form-group">
             <label for="InputName">姓名</label>
-            <input type="text" class="form-control" id="InputName" name="name">
+            <input type="text" class="form-control" id="InputName" name="Name">
+            <small id="nameHelp" class="form-text text-muted"></small>
         </div>
         <div class="form-group">
             <label for="InputEmail">電子郵件</label>
-            <input type="text" class="form-control" id="InputEmail" name="email">
+            <input type="text" class="form-control" id="InputEmail" name="Email">
         </div>
         <div class="form-group">
             <label for="InputAge">年紀</label>
-            <input type="number" class="form-control" id="InputAge" name="age">
+            <input type="number" class="form-control" id="InputAge" name="Age">
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -21,25 +22,24 @@
 <div class="col-3"></div>
 @section Scripts{
     <script>
-    const btnSubmit = document.querySelector('.btn');
-    const divInfo = document.querySelector('#div1');
+    /*const btnSubmit = document.querySelector('.btn');*/
+        /* const divInfo = document.querySelector('#div1');*/
 
-        btnSubmit.addEventListener("click", (evt) => {
-            evt.preventDefault();//取消btnSubmit更新頁面
-            let formData = new FormData(document.useInfo)
-        const xhr = new XMLHttpRequest();
+        const nametext = document.querySelector(`#InputName`)
+        const smalltext = document.querySelector(`#nameHelp`)
+        nametext.addEventListener("blur", () => {
+            /*evt.preventDefault();*///取消預設事件ex:btnSubmit更新頁面
+
+            let formData = new FormData(document.useInfo);
+            const xhr = new XMLHttpRequest();
 
             xhr.addEventListener("load", () => {
                 const data = xhr.responseText;
-                divInfo.innerHTML = `<h3>${data}</h3>`;
-
-            })
-
-
-    xhr.open(`POST`, `@Url.Content("~/api/index")`);
-
+                smalltext.innerHTML = `${data}`;
+            });
+            xhr.open(`POST`, `@Url.Content("~/api/index")`);
             xhr.send(formData);
-    })
+        });
 
     </script>
 }

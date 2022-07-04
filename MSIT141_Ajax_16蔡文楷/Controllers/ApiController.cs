@@ -16,15 +16,22 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
             _context = conetxt;
         }
         
-        public IActionResult Index(User user)
+        public IActionResult Index(Member member)
         {
-            
-            //System.Threading.Thread.Sleep(5000);
-            if (string.IsNullOrEmpty(user.name))
+            var q = _context.Members;
+            if(!string.IsNullOrEmpty(member.Name))
+            foreach(var meb in q)
             {
-                user.name = "Ajax";
+                if (member.Name == meb.Name)
+                {
+                    return Content("名字已經使用過了!!", "text/plain", System.Text.Encoding.UTF8);
+                }
+                else
+                {
+                    return Content("名字無人使用!!", "text/plain", System.Text.Encoding.UTF8);
+                }
             }
-            return Content($"<h1>{user.name}你好,你的年齡是{user.age}<h1>","text/html",System.Text.Encoding.UTF8);
+            return Content("請輸入名字!!", "text/plain", System.Text.Encoding.UTF8);
         }
     }
 }

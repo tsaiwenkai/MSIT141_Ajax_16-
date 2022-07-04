@@ -12,9 +12,10 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly DemoContext _context;
+        public HomeController(ILogger<HomeController> logger, DemoContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
