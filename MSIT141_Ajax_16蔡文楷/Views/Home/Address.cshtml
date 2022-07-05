@@ -8,8 +8,51 @@
     <script>
         const selCity = document.querySelector("#select1")
         const sel區域= document.querySelector("#select2")
+        const sel路 = document.querySelector("#select3")
+            // fetch======
+         @*fetch(`@Url.Content("/api/City")`).then(response => { return response.json(); }).then(data => { console.log(data); })*@
 
-       
+        // async await=====
+        async function getCity() {
+            let response = await fetch('@Url.Content("~/Api/City")');
+            let data = await response.json();
+            //console.log(data)
+            data.forEach((city) => {
+                let ops = new Option(city, city)
+                selCity.options.add(ops);
+            });
+         };
+        getCity();
+        //=================================
+        selCity.addEventListener("change", () => {
+            let selectedCity = selCity.options[selCity.selectedIndex].value;
+            async function getDistrict() {
+                let response = await fetch('@Url.Content("~/Api/districts")' + `?city=${selectedCity}`);
+                let data = await response.json();
+                /*console.log(data)*/
+                data.forEach((district) => {
+                    let ops = new Option(district, district)
+                    sel區域.options.add(ops);
+                });
+            };
+            getDistrict();
+        });
+        //==========================
+        sel區域.addEventListener("change", () => {
+            let selecteddistricts = sel區域.options[sel區域.selectedIndex].value;
+            async function getroad() {
+                let response = await fetch('@Url.Content("~/Api/roads")'+`?district=${selecteddistricts}`);
+                let data = await response.json();
+                /*console.log(data)*/
+                data.forEach((road) => {
+                    let ops = new Option(road, road)
+                    sel路.options.add(ops);
+                });
+            };
+            getroad();
+        });
+
+        //================
         @*const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", () => {
             //console.log(xhr.responseText);
@@ -18,8 +61,7 @@
             data.forEach((city) => {
                 let ops = new Option(city, city)
                 selCity.options.add(ops);
-
-            })
+           })
         });
         xhr.open("GET","@Url.Content("~/api/City")");
         xhr.send();
@@ -27,7 +69,7 @@
         selCity.addEventListener("change", () => {
             /*let cityname = selCity.options[selCity.selectedIndex].value*/
             const xhr = new XMLHttpRequest();
-            
+
             xhr.addEventListener("load", () => {
                 const data = JSON.parse(xhr.responseText);
                 data.forEach((區域) => {
@@ -36,7 +78,7 @@
                 });
 
             })
-            
+
             xhr.open("GET", `@Url.Content("~/api/區域")` + `?city=${selCity.options[selCity.selectedIndex].value}`);
             xhr.send();
         });*@

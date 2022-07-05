@@ -75,15 +75,15 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
             return Json(q);
         
         }
-        public IActionResult 區域(string city)
+        public IActionResult districts(string city)
         {
             var q = _context.Addresses.Where(q=>q.City==city).Select(q => q.SiteId).Distinct();
             return Json(q);
 
         }
-        public IActionResult 路(string 區域)
+        public IActionResult roads(string districts)
         {
-            var q = _context.Addresses.Where(q => q.SiteId==區域).Select(q=>q.Road);
+            var q = _context.Addresses.Where(q => q.SiteId== districts).Select(q=>q.Road);
             return Json(q);
 
         }
