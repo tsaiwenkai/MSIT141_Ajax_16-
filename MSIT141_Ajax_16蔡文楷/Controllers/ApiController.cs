@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MSIT141_Ajax_16蔡文楷.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +13,10 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
     public class ApiController : Controller
     {
         private readonly DemoContext _context;
-
-        public ApiController(DemoContext conetxt)
+        private readonly IWebHostEnvironment _host;
+        public ApiController(DemoContext conetxt , IWebHostEnvironment hostEnvironment)
         {
+            _host = hostEnvironment;
             _context = conetxt;
         }
         
@@ -33,5 +37,62 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
             }
             return Content("請輸入名字!!", "text/plain", System.Text.Encoding.UTF8);
         }
+        public IActionResult Register(Member member, IFormFile file)
+        {
+            //檔案上傳要有實際路徑
+            //C:\Users\Student\Documents\Ajax\MSIT141Site\wwwroot\uploads
+            //string path = _host.ContentRootPath; //會取得專案資料夾的實際路徑
+
+            string filepath = Path.Combine(_host.WebRootPath, "uploads", file.FileName);//會取得專案資料夾下wwwroot的實際路徑
+
+            using (var filestring=new FileStream(filepath, FileMode.Create)) 
+            {
+                file.CopyTo(filestring); //儲存檔案到uploads資料夾中
+            }
+
+            //傳成2進位資料進DATA
+            byte[] img = null;
+            using (var memorystring = new MemoryStream())
+            {
+                file.CopyTo(memorystring);
+                img = memorystring.ToArray();
+            }
+
+            member.FileName = file.FileName;
+            member.FileData = img;
+
+            _context.Add(member);
+            _context.SaveChanges();
+
+            string info = $"{file.FileName} - {file.ContentType} - {file.Length}";
+            return Content(info, "text/plain", System.Text.Encoding.UTF8);
+        }
+
+
+        public IActionResult City() 
+        {
+            var q = _context.Addresses.Select(q => q.City).Distinct();
+            return Json(q);
+        
+        }
+        public IActionResult 區域(string city)
+        {
+            var q = _context.Addresses.Where(q=>q.City==city).Select(q => q.SiteId).Distinct();
+            return Json(q);
+
+        }
+        public IActionResult 路(string 區域)
+        {
+            var q = _context.Addresses.Where(q => q.SiteId==區域).Select(q=>q.Road);
+            return Json(q);
+
+        }
+        public IActionResult GetImageBytes(int id = 1)
+        {
+            Member member = _context.Members.Find(id);
+            byte[] img = member.FileData;
+            return File(img, "image/jpeg");
+        }
+
     }
 }

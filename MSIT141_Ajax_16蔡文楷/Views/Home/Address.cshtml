@@ -1,0 +1,44 @@
+﻿
+<h1>Address</h1>
+
+<select id="select1"></select>
+<select id="select2"></select>
+<select id="select3"></select>
+@section Scripts{
+    <script>
+        const selCity = document.querySelector("#select1")
+        const sel區域= document.querySelector("#select2")
+
+       
+        @*const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", () => {
+            //console.log(xhr.responseText);
+            //console.log(JSON.parse(xhr.responseText)); 將JSON字串轉成JSON物件
+            const data = JSON.parse(xhr.responseText);
+            data.forEach((city) => {
+                let ops = new Option(city, city)
+                selCity.options.add(ops);
+
+            })
+        });
+        xhr.open("GET","@Url.Content("~/api/City")");
+        xhr.send();
+
+        selCity.addEventListener("change", () => {
+            /*let cityname = selCity.options[selCity.selectedIndex].value*/
+            const xhr = new XMLHttpRequest();
+            
+            xhr.addEventListener("load", () => {
+                const data = JSON.parse(xhr.responseText);
+                data.forEach((區域) => {
+                    let ops = new Option(區域, 區域)
+                    sel區域.options.add(ops);
+                });
+
+            })
+            
+            xhr.open("GET", `@Url.Content("~/api/區域")` + `?city=${selCity.options[selCity.selectedIndex].value}`);
+            xhr.send();
+        });*@
+    </script>
+}

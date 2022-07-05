@@ -36,6 +36,18 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
         {
             return View();
         }
+        public IActionResult Promies()
+        {
+            return View();
+        }
+        public IActionResult Address()
+        {
+            return View();
+        }
+        public IActionResult Fetch()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

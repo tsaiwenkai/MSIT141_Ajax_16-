@@ -54,7 +54,7 @@ namespace MSIT141_Ajax_16蔡文楷.Models
 
             modelBuilder.Entity<Member>(entity =>
             {
-                entity.Property(e => e.MemberId).ValueGeneratedNever();
+                entity.Property(e => e.MemberId).ValueGeneratedOnAdd() ;
 
                 entity.Property(e => e.Email).HasMaxLength(200);
 
