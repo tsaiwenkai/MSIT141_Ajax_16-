@@ -30,6 +30,7 @@ namespace MSIT141_Ajax_16蔡文楷
                 options.UseSqlServer(Configuration.GetConnectionString("DemoConnection"));
             });
             services.AddControllersWithViews();
+          
 
         }
 
@@ -48,7 +49,6 @@ namespace MSIT141_Ajax_16蔡文楷
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();

@@ -52,6 +52,15 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
         {
             return View();
         }
+        public IActionResult jQuery()
+        {
+            return View();
+        }
+        public IActionResult Partial()
+        {
+            ViewBag.data = "Hello Partial!!";
+            return PartialView(_context.Members);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

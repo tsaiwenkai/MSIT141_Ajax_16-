@@ -20,22 +20,31 @@ namespace MSIT141_Ajax_16蔡文楷.Controllers
             _context = conetxt;
         }
         
-        public IActionResult Index(Member member)
+        public IActionResult Index(User user)
         {
-            var q = _context.Members;
-            if(!string.IsNullOrEmpty(member.Name))
-            foreach(var meb in q)
+            //var q = _context.Members;
+            //if(!string.IsNullOrEmpty(member.Name))
+            //foreach(var meb in q)
+            //{
+            //    if (member.Name == meb.Name)
+            //    {
+            //        return Content("名字已經使用過了!!", "text/plain", System.Text.Encoding.UTF8);
+            //    }
+            //    else
+            //    {
+            //        return Content("名字無人使用!!", "text/plain", System.Text.Encoding.UTF8);
+            //    }
+            //}
+            //return Content("請輸入名字!!", "text/plain", System.Text.Encoding.UTF8);
+
+
+            //return Content("Ajax, 你好!!","text/plain", System.Text.Encoding.UTF8);
+            if (String.IsNullOrEmpty(user.name))
             {
-                if (member.Name == meb.Name)
-                {
-                    return Content("名字已經使用過了!!", "text/plain", System.Text.Encoding.UTF8);
-                }
-                else
-                {
-                    return Content("名字無人使用!!", "text/plain", System.Text.Encoding.UTF8);
-                }
+                user.name = "Ajax";
             }
-            return Content("請輸入名字!!", "text/plain", System.Text.Encoding.UTF8);
+            return Content($"{user.name}你好,你的年紀是{user.age}!!", "text/plain", System.Text.Encoding.UTF8);
+
         }
         public IActionResult Register(Member member, IFormFile file)
         {

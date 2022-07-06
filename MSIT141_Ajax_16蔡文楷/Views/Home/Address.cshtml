@@ -25,6 +25,7 @@
         getCity();
         //=================================
         selCity.addEventListener("change", () => {
+            sel區域.innerHTML = "";
             let selectedCity = selCity.options[selCity.selectedIndex].value;
             async function getDistrict() {
                 let response = await fetch('@Url.Content("~/Api/districts")' + `?city=${selectedCity}`);
@@ -40,14 +41,15 @@
         //==========================
         sel區域.addEventListener("change", () => {
             let selecteddistricts = sel區域.options[sel區域.selectedIndex].value;
+           /* console.log(selecteddistricts);*/
             async function getroad() {
-                let response = await fetch('@Url.Content("~/Api/roads")'+`?district=${selecteddistricts}`);
+                let response = await fetch('@Url.Content("~/Api/roads")' + `?district=${selecteddistricts}`);
                 let data = await response.json();
-                /*console.log(data)*/
-                data.forEach((road) => {
-                    let ops = new Option(road, road)
-                    sel路.options.add(ops);
-                });
+                console.log(data)
+                //data.forEach((road) => {
+                //    let ops = new Option(road, road)
+                //    sel路.options.add(ops);
+                //});
             };
             getroad();
         });
